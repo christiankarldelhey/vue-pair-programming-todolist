@@ -12,8 +12,9 @@ function decrement() {
 </script>
 
 <template>
-	<h1>Counter</h1>
 	<p>Current Count: {{ count }}</p>
-	<Button @click="increment">Increment</Button>
-	<Button @click="decrement">Decrement</Button>
+	<div class="flex gap-4 mt-4">
+		<Button variant="default" @click="increment">Increment</Button>
+		<Button variant="secondary" @click="decrement">Decrement</Button>
+	</div>
 </template>

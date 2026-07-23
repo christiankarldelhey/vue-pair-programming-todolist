@@ -5,8 +5,15 @@ import { useFilter } from '@/composables/useFilter';
 import type { Task } from '@/types/types';
 import ItemFilter from './ItemFilter.vue';
 
-const { filteredTasks } = useFilter(tasks as Task[]);
+const { filteredTasks, debouncedSearchQuery } = useFilter(tasks as Task[]);
 
+function highlight(text: string): string {
+  const query = debouncedSearchQuery.value;
+  if (!query || query.length < 3) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escaped})`, 'gi');
+  return text.replace(regex, '<strong class="text-primary">$1</strong>');
+}
 </script>
 
 <template>
@@ -25,8 +32,8 @@ const { filteredTasks } = useFilter(tasks as Task[]);
 					<TableCell colspan="3" class="text-center">No results</TableCell>
 				</TableRow>
 				<TableRow v-for="task in filteredTasks as Task[]" :key="task.id">
-					<TableCell>{{ task.name }}</TableCell>
-					<TableCell>{{ task.description }}</TableCell>
+					<TableCell v-html="highlight(task.name)"></TableCell>
+					<TableCell v-html="highlight(task.description)"></TableCell>
 					<TableCell>{{ task.completed ? 'Yes' : 'No' }}</TableCell>
 				</TableRow>
 			</TableBody>
