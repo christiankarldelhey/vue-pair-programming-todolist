@@ -2,9 +2,12 @@
 import { useI18n } from 'vue-i18n';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { useFilter } from '@/composables/useFilter';
 
-const { searchQuery, resetSearch } = useFilter([]);
+const searchQuery = defineModel<string>({ required: true });
+const emit = defineEmits<{
+  reset: [];
+}>();
+
 const { t } = useI18n();
 </script>
 
@@ -32,7 +35,7 @@ const { t } = useI18n();
       :disabled="!searchQuery"
       variant="secondary"
       aria-controls="task-search task-results"
-      @click="resetSearch"
+      @click="emit('reset')"
     >
       {{ t('filter.reset') }}
     </Button>

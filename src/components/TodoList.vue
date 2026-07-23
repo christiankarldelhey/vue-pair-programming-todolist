@@ -6,10 +6,11 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useFilter } from '@/composables/useFilter';
 import type { Task } from '@/types/types';
+import HighlightText from './HighlightText.vue';
 import ItemFilter from './ItemFilter.vue';
 
 const taskItems = reactive<Task[]>(tasks.map(task => ({ ...task })));
-const { filteredTasks, debouncedSearchQuery } = useFilter(taskItems);
+const { searchQuery, debouncedSearchQuery, filteredTasks, resetSearch } = useFilter(taskItems);
 const { t } = useI18n();
 
 const resultCountLabel = computed(() => {
@@ -20,20 +21,12 @@ const resultCountLabel = computed(() => {
 function updateTaskCompleted(task: Task, completed: boolean | 'indeterminate') {
   task.completed = completed === true;
 }
-
-function highlight(text: string): string {
-  const query = debouncedSearchQuery.value;
-  if (!query || query.length < 2) return text;
-  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const regex = new RegExp(`(${escaped})`, 'gi');
-  return text.replace(regex, '<strong class="text-primary">$1</strong>');
-}
 </script>
 
 <template>
   <section aria-labelledby="tasks-heading">
     <h1 id="tasks-heading" class="text-xl font-semibold">{{ t('tasks.title') }}</h1>
-    <ItemFilter class="mt-4" />
+    <ItemFilter v-model="searchQuery" class="mt-4" @reset="resetSearch" />
     <p id="task-results-status" class="sr-only" role="status" aria-live="polite">
       {{ resultCountLabel }}
     </p>
@@ -51,8 +44,12 @@ function highlight(text: string): string {
           <TableCell colspan="3" class="text-center">{{ t('tasks.noResults') }}</TableCell>
         </TableRow>
         <TableRow v-for="task in filteredTasks as Task[]" :key="task.id">
-          <TableCell v-html="highlight(task.name)"></TableCell>
-          <TableCell v-html="highlight(task.description)"></TableCell>
+          <TableCell>
+            <HighlightText :text="task.name" :query="debouncedSearchQuery" />
+          </TableCell>
+          <TableCell>
+            <HighlightText :text="task.description" :query="debouncedSearchQuery" />
+          </TableCell>
           <TableCell class="text-center">
             <Checkbox
               class="mx-auto cursor-pointer"
