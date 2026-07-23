@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import tasks from '../data/tasks.json';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useFilter } from '@/composables/useFilter';
@@ -7,10 +8,11 @@ import type { Task } from '@/types/types';
 import ItemFilter from './ItemFilter.vue';
 
 const { filteredTasks, debouncedSearchQuery } = useFilter(tasks as Task[]);
+const { t } = useI18n();
 
 const resultCountLabel = computed(() => {
   const count = filteredTasks.value.length;
-  return `${count} ${count === 1 ? 'task' : 'tasks'} found`;
+  return t('tasks.resultsFound', { count }, count);
 });
 
 function highlight(text: string): string {
@@ -24,28 +26,28 @@ function highlight(text: string): string {
 
 <template>
   <section aria-labelledby="tasks-heading">
-    <h1 id="tasks-heading" class="text-xl font-semibold">Tasks</h1>
+    <h1 id="tasks-heading" class="text-xl font-semibold">{{ t('tasks.title') }}</h1>
     <ItemFilter class="mt-4" />
     <p id="task-results-status" class="sr-only" role="status" aria-live="polite">
       {{ resultCountLabel }}
     </p>
     <Table id="task-results" class="mt-4" aria-describedby="task-results-status">
-      <caption class="sr-only">Task search results</caption>
+      <caption class="sr-only">{{ t('tasks.resultsCaption') }}</caption>
       <TableHeader>
         <TableRow>
-          <TableHead scope="col">Task</TableHead>
-          <TableHead scope="col">Description</TableHead>
-          <TableHead scope="col">Completed</TableHead>
+          <TableHead scope="col">{{ t('tasks.columns.task') }}</TableHead>
+          <TableHead scope="col">{{ t('tasks.columns.description') }}</TableHead>
+          <TableHead scope="col">{{ t('tasks.columns.completed') }}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         <TableRow v-if="filteredTasks.length === 0">
-          <TableCell colspan="3" class="text-center">No results</TableCell>
+          <TableCell colspan="3" class="text-center">{{ t('tasks.noResults') }}</TableCell>
         </TableRow>
         <TableRow v-for="task in filteredTasks as Task[]" :key="task.id">
           <TableCell v-html="highlight(task.name)"></TableCell>
           <TableCell v-html="highlight(task.description)"></TableCell>
-          <TableCell>{{ task.completed ? 'Yes' : 'No' }}</TableCell>
+          <TableCell>{{ t(task.completed ? 'tasks.completed.yes' : 'tasks.completed.no') }}</TableCell>
         </TableRow>
       </TableBody>
     </Table>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
 import type { ActiveView } from '@/types/types';
 import {
   NavigationMenu,
@@ -15,6 +16,8 @@ defineProps<{
 const emit = defineEmits<{
   (e: 'update:activeView', value: ActiveView): void;
 }>();
+
+const { t } = useI18n();
 </script>
 
 <template>
@@ -26,7 +29,7 @@ const emit = defineEmits<{
             :class="[navigationMenuTriggerStyle(), activeView === 'todoList' ? 'bg-muted text-accent-foreground font-semibold' : '']"
             @click="emit('update:activeView', 'todoList')"
           >
-            TodoList
+            {{ t('navigation.todoList') }}
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -34,7 +37,7 @@ const emit = defineEmits<{
             :class="[navigationMenuTriggerStyle(), activeView === 'counter' ? 'bg-muted text-accent-foreground font-semibold' : '']"
             @click="emit('update:activeView', 'counter')"
           >
-            Counter
+            {{ t('navigation.counter') }}
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
