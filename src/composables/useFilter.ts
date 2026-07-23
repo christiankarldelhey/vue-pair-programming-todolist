@@ -1,8 +1,8 @@
 import { ref, computed } from 'vue';
-import { refDebounced } from '@vueuse/core';
+import { refDebounced, useLocalStorage } from '@vueuse/core';
 
 export function useFilter(architectures: any[]) {
-  const searchQuery = ref('');
+  const searchQuery = useLocalStorage('searchQuery', '');
   const debouncedSearchQuery = refDebounced(searchQuery, 300);
 
   const filteredArchitectures = computed(() => {
