@@ -1,17 +1,30 @@
 <script setup lang="ts">
-import architectures from '../data/architectures.json';
+import tasks from '../data/tasks.json';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useFilter } from '@/composables/useFilter';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import type { Task } from '@/types/types';
 
-const { filteredArchitectures, searchQuery } = useFilter(architectures);
+const { filteredTasks, searchQuery, resetSearch } = useFilter(tasks as Task[]);
 
 </script>
 
 <template>
 	<h1 class="text-3xl font-bold mb-4">Todo-List</h1>
 	<div class="container">
-		<Input v-model="searchQuery" placeholder="Search tasks..." />
+		<div class="relative">
+	<Input v-model="searchQuery" placeholder="Search tasks..." class="pr-20" />
+	<Button
+		v-if="searchQuery"
+		variant="destructive"
+		size="sm"
+		class="absolute right-1 top-1/2 -translate-y-1/2 h-7"
+		@click="resetSearch"
+	>
+		Reset
+	</Button>
+</div>
 	<Table class="mt-4">
 		<TableHeader>
 			<TableRow>
@@ -21,13 +34,13 @@ const { filteredArchitectures, searchQuery } = useFilter(architectures);
 			</TableRow>
 		</TableHeader>
 		<TableBody>
-			<TableRow v-if="filteredArchitectures.length === 0">
+			<TableRow v-if="filteredTasks.length === 0">
 				<TableCell colspan="3" class="text-center">No results</TableCell>
 			</TableRow>
-			<TableRow v-for="architecture in filteredArchitectures" :key="architecture.id">
-				<TableCell>{{ architecture.name }}</TableCell>
-				<TableCell>{{ architecture.description }}</TableCell>
-				<TableCell>{{ architecture.completed ? 'Yes' : 'No' }}</TableCell>
+			<TableRow v-for="task in filteredTasks as Task[]" :key="task.id">
+				<TableCell>{{ task.name }}</TableCell>
+				<TableCell>{{ task.description }}</TableCell>
+				<TableCell>{{ task.completed ? 'Yes' : 'No' }}</TableCell>
 			</TableRow>
 		</TableBody>
 	</Table>

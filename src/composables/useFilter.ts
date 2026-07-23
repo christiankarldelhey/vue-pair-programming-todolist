@@ -1,24 +1,28 @@
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { refDebounced, useLocalStorage } from '@vueuse/core';
+import type { Task } from '@/types/types';
 
-export function useFilter(architectures: any[]) {
+export function useFilter(tasks: Task[]) {
   const searchQuery = useLocalStorage('searchQuery', '');
   const debouncedSearchQuery = refDebounced(searchQuery, 300);
 
-  const filteredArchitectures = computed(() => {
+  const filteredTasks = computed(() => {
     if (!debouncedSearchQuery.value || debouncedSearchQuery.value.length < 3) {
-      return architectures;
+      return tasks;
     }
     const query = debouncedSearchQuery.value.toLowerCase();
-    return architectures.filter(architecture =>
-      architecture.name.toLowerCase().includes(query) ||
-      architecture.description.toLowerCase().includes(query)
+    return tasks.filter(task =>
+      task.name.toLowerCase().includes(query) ||
+      task.description.toLowerCase().includes(query)
     );
   });
 
   return {
     searchQuery,
     debouncedSearchQuery,
-    filteredArchitectures
+    filteredTasks,
+    resetSearch: () => {
+      searchQuery.value = '';
+    }
   };
 }
