@@ -3,6 +3,7 @@ import { createI18n } from 'vue-i18n';
 const messages = {
   en: {
     navigation: {
+      viewSelector: 'Choose a view',
       todoList: 'Todo list',
       counter: 'Counter',
     },
