@@ -1,7 +1,7 @@
-import { ref } from 'vue';
+import { useLocalStorage } from '@vueuse/core';
 
 export function useCounter(initialValue = 0) {
-  const count = ref(initialValue);
+  const count = useLocalStorage('counterValue', initialValue);
 
   function increment() {
     count.value++;

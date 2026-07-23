@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ActiveView } from '@/types/types';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -7,12 +8,12 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 
-const props = defineProps<{
-  activeView: string;
+defineProps<{
+  activeView: ActiveView;
 }>();
 
 const emit = defineEmits<{
-  (e: 'update:activeView', value: string): void;
+  (e: 'update:activeView', value: ActiveView): void;
 }>();
 </script>
 

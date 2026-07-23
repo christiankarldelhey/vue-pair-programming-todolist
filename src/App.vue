@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useLocalStorage } from '@vueuse/core';
 import TodoList from './components/TodoList.vue';
 import Counter from './components/Counter.vue';
 import AppHeader from './components/AppHeader.vue';
+import type { ActiveView } from '@/types/types';
 
-const activeView = ref<'todoList' | 'counter'>('todoList');
+const activeView = useLocalStorage<ActiveView>('activeView', 'todoList');
 </script>
 
 <template>

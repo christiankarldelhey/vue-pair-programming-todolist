@@ -1,7 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { beforeEach, describe, it, expect } from 'vitest';
 import { useCounter } from '../useCounter';
 
 describe('useCounter', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it('starts in 0 by default', () => {
     const { count } = useCounter();
     expect(count.value).toBe(0);
@@ -32,5 +36,13 @@ describe('useCounter', () => {
     const { count, decrement } = useCounter(0);
     decrement();
     expect(count.value).toBe(-1);
+  });
+
+  it('restores the persisted count', () => {
+    localStorage.setItem('counterValue', '7');
+
+    const { count } = useCounter();
+
+    expect(count.value).toBe(7);
   });
 });
