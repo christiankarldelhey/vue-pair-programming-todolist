@@ -23,10 +23,7 @@ const messages = {
         completed: 'Completed',
       },
       noResults: 'No results',
-      completed: {
-        yes: 'Yes',
-        no: 'No',
-      },
+      completionLabel: 'Toggle completion for {task}',
     },
     counter: {
       title: 'Counter',

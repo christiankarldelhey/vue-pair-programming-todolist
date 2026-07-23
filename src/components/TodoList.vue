@@ -1,19 +1,25 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import tasks from '../data/tasks.json';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useFilter } from '@/composables/useFilter';
 import type { Task } from '@/types/types';
 import ItemFilter from './ItemFilter.vue';
 
-const { filteredTasks, debouncedSearchQuery } = useFilter(tasks as Task[]);
+const taskItems = reactive<Task[]>(tasks.map(task => ({ ...task })));
+const { filteredTasks, debouncedSearchQuery } = useFilter(taskItems);
 const { t } = useI18n();
 
 const resultCountLabel = computed(() => {
   const count = filteredTasks.value.length;
   return t('tasks.resultsFound', { count }, count);
 });
+
+function updateTaskCompleted(task: Task, completed: boolean | 'indeterminate') {
+  task.completed = completed === true;
+}
 
 function highlight(text: string): string {
   const query = debouncedSearchQuery.value;
@@ -37,7 +43,7 @@ function highlight(text: string): string {
         <TableRow>
           <TableHead scope="col">{{ t('tasks.columns.task') }}</TableHead>
           <TableHead scope="col">{{ t('tasks.columns.description') }}</TableHead>
-          <TableHead scope="col">{{ t('tasks.columns.completed') }}</TableHead>
+          <TableHead scope="col" class="text-center">{{ t('tasks.columns.completed') }}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -47,7 +53,14 @@ function highlight(text: string): string {
         <TableRow v-for="task in filteredTasks as Task[]" :key="task.id">
           <TableCell v-html="highlight(task.name)"></TableCell>
           <TableCell v-html="highlight(task.description)"></TableCell>
-          <TableCell>{{ t(task.completed ? 'tasks.completed.yes' : 'tasks.completed.no') }}</TableCell>
+          <TableCell class="text-center">
+            <Checkbox
+              class="mx-auto cursor-pointer"
+              :model-value="task.completed"
+              :aria-label="t('tasks.completionLabel', { task: task.name })"
+              @update:model-value="updateTaskCompleted(task, $event)"
+            />
+          </TableCell>
         </TableRow>
       </TableBody>
     </Table>
