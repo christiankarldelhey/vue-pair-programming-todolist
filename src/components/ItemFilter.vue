@@ -10,7 +10,7 @@ const { searchQuery, resetSearch } = useFilter([]);
 <template>
 <div class="flex w-full max-w-sm items-center space-x-2">
     <Input v-model="searchQuery" type="text" placeholder="Search tasks..." />
-    <Button :disabled="!searchQuery" @click="resetSearch" variant="outline" >
+    <Button :disabled="!searchQuery" variant="secondary" @click="resetSearch" >
         Reset
     </Button>
     </div>

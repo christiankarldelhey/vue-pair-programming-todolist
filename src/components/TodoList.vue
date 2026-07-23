@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import tasks from '../data/tasks.json';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import Counter from './Counter.vue';
 import { useFilter } from '@/composables/useFilter';
 import type { Task } from '@/types/types';
 import ItemFilter from './ItemFilter.vue';
@@ -11,9 +10,8 @@ const { filteredTasks } = useFilter(tasks as Task[]);
 </script>
 
 <template>
-	<h1 class="text-3xl font-bold mb-4">Todo-List</h1>
-	<div class="container">
-		<ItemFilter />
+	<div>
+		<ItemFilter class="mt-4" />
 		<Table class="mt-4">
 			<TableHeader>
 				<TableRow>
@@ -33,14 +31,5 @@ const { filteredTasks } = useFilter(tasks as Task[]);
 				</TableRow>
 			</TableBody>
 		</Table>
-		<h2>Counter</h2>
-		<Counter />
 	</div>
 </template>
-
-<style scoped lang="scss">
-h1 {
-	font-size: 2em;
-	margin-bottom: 10px;
-}
-</style>
