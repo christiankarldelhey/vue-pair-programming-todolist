@@ -7,7 +7,9 @@
     "dev": "vite --mode localhost --host",
     "build": "rm -rf dist && npm run check-typing && vite build",
     "preview": "vite preview --host",
-    "check-typing": "vue-tsc --build --noEmit"
+    "check-typing": "vue-tsc --build --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
@@ -28,11 +30,14 @@
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.1.1",
     "@vitejs/plugin-vue": "^6.0.4",
+    "@vue/test-utils": "^2.4.11",
     "@vue/tsconfig": "^0.8.1",
+    "happy-dom": "^20.11.1",
     "sass-embedded": "^1.98.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~5.9.3",
     "vite": "8.0.1",
+    "vitest": "^4.1.10",
     "vue-tsc": "^3.2.5"
   },
   "keywords": [],

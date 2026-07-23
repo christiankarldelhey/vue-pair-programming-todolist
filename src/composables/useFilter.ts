@@ -7,7 +7,7 @@ export function useFilter(tasks: Task[]) {
   const debouncedSearchQuery = refDebounced(searchQuery, 300);
 
   const filteredTasks = computed(() => {
-    if (!debouncedSearchQuery.value || debouncedSearchQuery.value.length < 3) {
+    if (!debouncedSearchQuery.value || debouncedSearchQuery.value.length < 2) {
       return tasks;
     }
     const query = debouncedSearchQuery.value.toLowerCase();

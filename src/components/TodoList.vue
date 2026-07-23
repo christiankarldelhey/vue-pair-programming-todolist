@@ -9,7 +9,7 @@ const { filteredTasks, debouncedSearchQuery } = useFilter(tasks as Task[]);
 
 function highlight(text: string): string {
   const query = debouncedSearchQuery.value;
-  if (!query || query.length < 3) return text;
+  if (!query || query.length < 2) return text;
   const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp(`(${escaped})`, 'gi');
   return text.replace(regex, '<strong class="text-primary">$1</strong>');
