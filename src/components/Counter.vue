@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { Button } from '@/components/ui/button';
+import { useCounter } from '@/composables/useCounter';
 
-const count = ref(0);
-function increment() {
-	count.value++;
-}
-function decrement() {
-	count.value--;
-}
+const { count, increment, decrement } = useCounter();
 </script>
 
 <template>
