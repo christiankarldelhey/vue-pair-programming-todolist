@@ -1,24 +1,19 @@
 <script setup lang="ts">
 import tasks from '../data/tasks.json';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import Counter from './Counter.vue';
 import { useFilter } from '@/composables/useFilter';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
 import type { Task } from '@/types/types';
+import ItemFilter from './ItemFilter.vue';
 
-const { filteredTasks, searchQuery, resetSearch } = useFilter(tasks as Task[]);
+const { filteredTasks } = useFilter(tasks as Task[]);
 
 </script>
 
 <template>
 	<h1 class="text-3xl font-bold mb-4">Todo-List</h1>
 	<div class="container">
-		  <div class="flex w-full max-w-sm items-center space-x-2">
-			<Input v-model="searchQuery" type="text" placeholder="Search tasks..." />
-			<Button :disabled="!searchQuery" @click="resetSearch" variant="outline" >
-				Reset
-			</Button>
-		  </div>
+		<ItemFilter />
 		<Table class="mt-4">
 			<TableHeader>
 				<TableRow>
@@ -38,6 +33,8 @@ const { filteredTasks, searchQuery, resetSearch } = useFilter(tasks as Task[]);
 				</TableRow>
 			</TableBody>
 		</Table>
+		<h2>Counter</h2>
+		<Counter />
 	</div>
 </template>
 
