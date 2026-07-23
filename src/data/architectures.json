@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Learn Feature-Sliced Design (FSD)",
+    "description": "Organizes the codebase into layers (app, pages, widgets, features, entities, shared) with strict one-directional dependencies. Each feature is fully self-contained, making it easy to add, remove, or toggle features independently. Very popular in mid-to-large Vue 3 projects in 2026.",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "name": "Learn Micro-Frontends",
+    "description": "Splits a large frontend app into independent modules owned by different teams, each deployable separately. In Vue, enabled natively via Vite 7's Native Federation (Rolldown engine), allowing components and logic to be shared across repos at runtime without build-time coupling.",
+    "completed": false
+  },
+  {
+    "id": 3,
+    "name": "Learn Island Architecture",
+    "description": "Renders the page as mostly static HTML with isolated interactive 'islands' that hydrate independently. Reduces JavaScript sent to the browser dramatically. Used in Vue via Nuxt with partial hydration — ideal for content-heavy sites where only certain components need reactivity.",
+    "completed": false
+  },
+  {
+    "id": 4,
+    "name": "Learn Vertical Slicing",
+    "description": "Structures the codebase around business features end-to-end (UI + state + API calls in one slice) rather than technical layers. Each slice can be developed, tested, and deployed independently. Works naturally with Vue composables as the glue layer within each slice.",
+    "completed": false
+  },
+  {
+    "id": 5,
+    "name": "Learn Hexagonal Architecture (Ports & Adapters)",
+    "description": "Isolates core business logic from external concerns (UI, APIs, databases) behind defined interfaces called ports, with adapters implementing them. In a Vue context, composables act as the port layer — the UI never talks directly to an API, it talks to a composable that abstracts it. Makes testing and swapping implementations straightforward.",
+    "completed": false
+  }
+]
