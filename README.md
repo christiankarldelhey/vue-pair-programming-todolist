@@ -75,6 +75,49 @@ This project is licensed under the MIT License.
 
 ## Implementation Summary
 
+### Updated Project Structure
+
+```text
+vue-pair-programming-test
+├── src
+│   ├── components
+│   │   ├── ui
+│   │   │   ├── button
+│   │   │   ├── checkbox
+│   │   │   ├── input
+│   │   │   ├── navigation-menu
+│   │   │   ├── table
+│   │   │   └── tabs
+│   │   ├── AppHeader.vue
+│   │   ├── Counter.vue
+│   │   ├── HighlightText.vue
+│   │   ├── ItemFilter.vue
+│   │   └── TodoList.vue
+│   ├── composables
+│   │   ├── __tests__
+│   │   │   ├── useCounter.spec.ts
+│   │   │   └── useFilter.spec.ts
+│   │   ├── useCounter.ts
+│   │   └── useFilter.ts
+│   ├── data
+│   │   └── tasks.json
+│   ├── i18n
+│   │   └── index.ts
+│   ├── lib
+│   │   └── utils.ts
+│   ├── styles
+│   │   └── main.css
+│   ├── types
+│   │   └── types.ts
+│   ├── App.vue
+│   └── main.ts
+├── components.json
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+```
+
 ### Core Features
 
 #### Task Filtering and Search
@@ -97,6 +140,7 @@ The following values are stored in `localStorage` and restored after a page refr
 
 #### Refactor and architecture
 
+- Add types for tasks and filter state with TypeScript.
 - Extracted the task search UI into `ItemFilter.vue`.
 - Extracted reusable stateful logic into `useFilter` and `useCounter` composables.
 
@@ -117,7 +161,7 @@ Added 13 Vitest unit tests covering the composables:
 
 #### UI
 
-- Added shadcn-vue as the shared UI component collection.
+- Added shadcn-vue as the shared UI component collection and tailwind for css styling.
 
 #### Accessibility
 
